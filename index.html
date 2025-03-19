@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Sample Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Jasmine CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jasmine/3.10.0/jasmine.min.css">
+    <!-- Jasmine JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/3.10.0/jasmine.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/3.10.0/jasmine-html.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/3.10.0/boot.min.js"></script>
+
+    <script src="public/js/index.js" ></script> <!-- Use defer to ensure it loads after the HTML -->
+    <script src="test/index.test.js" ></script> <!--Use defer to ensure it loads after the HTML -->
+
+    
+
+    
+</head>
+<body>
+	
+    <div id="container">
+        <input id="display">
+
+        <div id="allButtons">
+            <button class="operator" id="changeSign">+/-</button> <button class="operator" id="sqrt">√</button> <button class="operator" id="percent">%</button> <button class="operator" id="div">÷</button> 
+            <button class="memory" id="memr">MRC</button> <button class="memory" id="memm">M-</button> <button class="memory" id="memp">M+</button> <button class="operator" id="mult">×</button> 
+            <button class="number">7</button> <button class="number">8</button> <button class="number">9</button> <button class="operator" id="minus">-</button> 
+            <button class="number">4</button> <button class="number">5</button> <button class="number">6</button> <button class="operator" id="plus">+</button> 
+            <button class="number">1</button> <button class="number">2</button> <button class="number">3</button> <button class="operator" id="equals">=</button> 
+            <button id="clear">ON/C</button> <button class="number">0</button> <button class="decimal" id="decimal">.</button> 
+        </div>
+        
+    </div>
+
+    
+    <script>
+        window.onload = function() {
+        window.calculator.init();
+    };
+    </script>
+</body>
+</html>

@@ -1,0 +1,99 @@
+/* Center the calculator */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: hsl(0,0%,95%);
+    
+}
+
+/* Calculator container */
+#container {
+    /*display: flex;
+    flex-direction: column;*/
+    font-family: Arial, sans-serif;
+    max-width: 350px;
+    background-color: hsl(0,0%,15%);
+    border-radius: 10px;
+    /*box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);*/
+    overflow: hidden;
+}
+
+/* Display input */
+#display {
+    
+    width: 100%;
+    height: 70px;
+    font-size: 2rem;
+    text-align: left;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: hsl(0,0%,20%);
+    margin-bottom: 10px;
+    color: white;
+}
+
+/* Button grid */
+#allButtons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    padding: 25px;
+}
+
+/* Button styles */
+button {
+    height: 60px;
+    width: 60px;
+    font-size: 15px;
+    font-weight: bold;
+    padding: 15px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: 0.2s;
+    background-color: hsl(0,0%,30%);
+    color: white;
+   
+}
+/* Hover and Active Effects */
+button:hover {
+    background-color: hsl(0, 0%, 40%);
+}
+
+button:active {
+    background-color: hsl(0, 0%, 50%);
+}
+
+/* Operator buttons */
+.operator {
+    background-color: hsl(35, 100%, 55%);
+}
+.operator:hover {
+    background-color: hsl(35, 100%, 65%);
+    
+}
+.operator:active {
+    background-color: hsl(35, 100%, 75%);
+    
+}
+
+
+
+/* Memory buttons */
+.memory {
+    background-color: hsl(0,0%,50%);
+}
+.memory:hover {
+    background-color: hsl(0,0%,60%);
+}
+.memory:active {
+    background-color: hsl(0,0%,70%);
+}
+
+
+
+
+
