@@ -5,50 +5,46 @@ console.log("index.js is in use...");
 window.calculator = window.calculator || {}; 
 
 
-console.log("window.calculator is initially:", window.calculator);
-console.log("window.calculator.init is initially:", window.calculator.init);
+//console.log("window.calculator is initially:", window.calculator);
+//console.log("window.calculator.init is initially:", window.calculator.init);
 
 window.calculator.init = function () {
-    console.log("Initializing calculator after it has been called by beforeEach...");
+    
     const display = document.getElementById('display');
-    console.log("new display", display);
-
-    console.log("window.calculator is now:", window.calculator);
-    //'window.calculator is now:', Object{init: function(){ ... }}
-    console.log("window.calculator.init is now:", window.calculator.init);
-    //'window.calculator.init is now:', function(){ ... }
+   
+    
 
 // Calculator Core functionality
 
-
 (function(){ //runs before the index.test.js and all this is exucuted, this is window.calculate
-    console.log("index.js init is loading..")
-    //window.calculate = calculate;
-
-    //const display = document.getElementById('display');
-    console.log(document.getElementById("display"));
+    
     if (!display) {
         console.error("Display element not found! Delaying init...");
         return;
     }
-    console.log("Display found!");
+    
 
     let memory = 0; //stores the memory value
     let memoryRecallCount = 0; //tracks consecutive presses of MRC
-    //let clearCount = 0; tracks presses of on/c
+    
 
     
 
     /**_________________Append input to screen______________ */
     function appendDisplay(input){
-        display.value += input;
+        // Check if the last input is already √ (to prevent duplicate symbols)
+        if (input === '√') {
+            // If the display ends with a number, insert √ before it
+            if (display.value && !display.value.includes('√')) {
+                display.value = '√' + display.value;  // Make sure the √ comes before the number
+            }
+        } else {
+            // Regular input logic for other buttons
+            display.value += input;
+        }
     }
 
-    /**_________________Clear the display______________ */
-    function clearDisplay() {
-        display.value ="";
-        
-    }
+    
 
     /**_________________Calculate the expression on the display______________ */
     function calculate() {
@@ -57,7 +53,7 @@ window.calculator.init = function () {
             display.value = display.value.replace(/(\d+)%/g, "($1/100)");
     
             // Step 2: Handle square root (replace "9√" with "Math.sqrt(9)")
-            display.value = display.value.replace(/(\d+)√/g, "Math.sqrt($1)");
+            display.value = display.value.replace(/√(\d+)/g, "Math.sqrt($1)");
     
             // Step 3: Evaluate the expression
             display.value = eval(display.value);  // Use eval after replacing √ with Math.sqrt()
@@ -69,14 +65,6 @@ window.calculator.init = function () {
     }
     
 
-    /**_________________Calculate the square root______________ */
-    function applySquareRoot() {
-        try {
-            display.value = Math.sqrt(parseFloat(display.value));
-        } catch (error) {
-            display.value = "Error";
-        }
-    }
 
     /**_________________Change between negative and positive signs(+/-)______________ */
     function toggleSign() {
@@ -116,10 +104,14 @@ window.calculator.init = function () {
     /**_________________Switch between the on, off and clear functionality(Off/On/Clear)______________ */
     function powerToggle() {
         
-        if (display.value === "") {
+        if (display.value !== "") { //clear if turned on and clicked
             display.value = ""; // Ensure clean start
             document.querySelectorAll("button").forEach((btn) => (btn.disabled = false));
-        } else {
+        } else if (display.value === "" && 
+            Array.from(document.querySelectorAll("button")).some((btn) => btn.disabled)) {
+                // If no value and buttons are already disabled, enable buttons again
+                document.querySelectorAll("button").forEach((btn) => (btn.disabled = false));
+        }else {
             display.value = ""; // Turns off calculator
             document.querySelectorAll("button").forEach((btn) => (btn.disabled = true));
             document.getElementById("clear").disabled = false; // Keep ON/C active
@@ -128,7 +120,7 @@ window.calculator.init = function () {
   
     
     //registers eventlisteners for all buttons to perform their operations
-     //flow: this is assigned butnot called immediatley
+     
         console.log("eventlisteners listening...");
 		document.getElementById('changeSign').addEventListener('click', () =>toggleSign());
         document.getElementById('sqrt').addEventListener('click', ()=>appendDisplay('√'));

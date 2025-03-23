@@ -17,8 +17,40 @@ describe("Calculator", function() {
 
 
 
-    it("should pass", function() {
-      expect(true).to.equal(true);
+    
+
+  it("should disable all buttons except on/c when turned off", function() {
+    cy.get('#clear').click(); // Turn off
+
+    cy.get('#display').should('have.value', ''); // Display should be cleared
+    
+    cy.get('button').each(($btn) => {
+      if ($btn.attr('id') !== 'clear') {
+        cy.wrap($btn).should('be.disabled'); // All buttons except 'ON/C' should be disabled
+      }
+    });
+  });
+
+  it("should enable all buttons when turned on", function() {
+    
+    cy.get('#clear').click(); // turn off
+    cy.get('#display').should('have.value', ''); // Display should be cleared
+    
+    cy.get('#clear').click(); // turn on
+
+    cy.get('button').each(($btn) => {
+      
+      cy.wrap($btn).should('be.enabled'); // All buttons should be enabled
+      
+    });
+  });
+
+  it("should clear display", function() {
+    cy.get('#display').type('123');
+    cy.get('#clear').click(); // clear
+    cy.get('#display').should('have.value', '');
+    
+
   });
 
   it("should display 4 when 2+2 is calculated", function() {
@@ -50,8 +82,8 @@ describe("Calculator", function() {
     cy.get('#display').should('have.value', '2');
   });
 
-  it("should return 3 when 9√ is calculated", function() {
-    cy.get('#display').type('9√');
+  it("should return 3 when √9 is calculated", function() {
+    cy.get('#display').type('√9');
     cy.get('#equals').click();
     cy.get('#display').should('have.value', '3');
   });
@@ -73,6 +105,7 @@ describe("Calculator", function() {
     cy.get('#display').type('2+2');
     cy.get('#equals').click();
     cy.get('#memp').click(); // Add result to memory
+    cy.get('#clear').click();
     cy.get('#memr').click(); // Recall memory
     cy.get('#display').should('have.value', '4');
   });
@@ -82,7 +115,6 @@ describe("Calculator", function() {
     cy.get('#equals').click();
     cy.get('#memp').click(); // Add result to memory 
     cy.get('#clear').click();
-    cy.get('#clear').click(); //turn the calculator back on
 
     cy.get('#display').type('3+3');
     cy.get('#equals').click();
@@ -92,18 +124,7 @@ describe("Calculator", function() {
     cy.get('#display').should('have.value', '4');
   });
 
-  it("should disable all buttons when turned off", function() {
-    cy.get('#display').type('123');
-    cy.get('#clear').click(); // Turn off
-
-    cy.get('#display').should('have.value', ''); // Display should be cleared
-
-    cy.get('button').each(($btn) => {
-      if ($btn.attr('id') !== 'clear') {
-        cy.wrap($btn).should('be.disabled'); // All buttons except 'ON/C' should be disabled
-      }
-    });
-  });
+  
 
   //negative integers
   it("should return -2 for 1-3", function() {
@@ -129,7 +150,7 @@ describe("Calculator", function() {
     cy.get('#display').should('have.value', '1'); // Assert the result is 1
   });
 
-  // Negative test cases
+  // Dividing by 0
   it("should return Infinity when dividing by 0", function() {
     cy.get('#display').type('10/0');
     cy.get('#equals').click();
